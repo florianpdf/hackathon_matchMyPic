@@ -1,3 +1,7 @@
+game_challenge:
+    resource: "@GameBundle/Resources/config/routing/challenge.yml"
+    prefix:   /challenge
+
 game_homepage:
     path:     /
     defaults: { _controller: GameBundle:Default:index }
