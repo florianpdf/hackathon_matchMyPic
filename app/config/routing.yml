@@ -5,6 +5,3 @@ game:
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /
-
-fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
