@@ -1,0 +1,36 @@
+GameBundle\Entity\Image:
+    type: entity
+    table: null
+    repositoryClass: GameBundle\Repository\ImageRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        src:
+            type: string
+            length: '255'
+        validee:
+            type: boolean
+            nullable: true
+        type:
+            type: string
+            length: 255
+        lat:
+            type: string
+            length: 255
+            nullable: true
+        lng:
+            type: string
+            length: 255
+            nullable: true
+        date:
+            type: datetime
+
+
+    manyToOne:
+        users:
+            targetEntity: UserBundle\Entity\User
+    lifecycleCallbacks: {  }

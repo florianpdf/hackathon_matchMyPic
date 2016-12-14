@@ -1,0 +1,40 @@
+GameBundle\Entity\Challenge:
+    type: entity
+    table: null
+    repositoryClass: GameBundle\Repository\ChallengeRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        nom:
+            type: string
+            length: 255
+        description:
+            type: text
+        type:
+            type: string
+            length: 255
+        duree:
+            type: integer
+            nullable: true
+        dateCreate:
+            type: datetime
+            column: date_create
+
+    manyToOne:
+        images:
+            targetEntity: GameBundle\Entity\Image
+        user_meneur:
+            targetEntity: UserBundle\Entity\User
+        user_createur:
+            targetEntity: UserBundle\Entity\User
+
+    manyToMany:
+        users:
+            targetEntity: UserBundle\Entity\User
+            mappedBy: chalenges
+
+    lifecycleCallbacks: {  }
