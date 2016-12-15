@@ -1,6 +1,8 @@
 <?php
 
 namespace GameBundle\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Challenge
@@ -34,6 +36,7 @@ class Challenge
 
     /**
      * @var integer
+     * @Assert\Range(min = 0)
      */
     private $duree;
 
@@ -156,8 +159,8 @@ class Challenge
      * Set duree
      *
      * @param integer $duree
-     *
      * @return Challenge
+     *
      */
     public function setDuree($duree)
     {

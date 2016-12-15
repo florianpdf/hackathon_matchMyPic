@@ -1,0 +1,9 @@
+/*.dureeType >div:last-child {*/
+    /*display:none;*/
+/*}*/
+
+/*.dureeType > input[type="checkbox"]:checked  .dureeType >div:last-child {*/
+    /*display:block;*/
+/*}*/
+
+
