@@ -25,8 +25,6 @@ GameBundle\Entity\Challenge:
             column: date_create
 
     manyToOne:
-        images:
-            targetEntity: GameBundle\Entity\Image
         user_meneur:
             targetEntity: UserBundle\Entity\User
         user_createur:

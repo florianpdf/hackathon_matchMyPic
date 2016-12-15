@@ -9,11 +9,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Challenge
 {
-
     ##########################################
     ########## Generate Code #################
     ##########################################
-    
+   
     /**
      * @var integer
      */
@@ -44,11 +43,6 @@ class Challenge
      * @var \DateTime
      */
     private $dateCreate;
-
-    /**
-     * @var \GameBundle\Entity\Image
-     */
-    private $images;
 
     /**
      * @var \UserBundle\Entity\User
@@ -201,30 +195,6 @@ class Challenge
     public function getDateCreate()
     {
         return $this->dateCreate;
-    }
-
-    /**
-     * Set images
-     *
-     * @param \GameBundle\Entity\Image $images
-     *
-     * @return Challenge
-     */
-    public function setImages(\GameBundle\Entity\Image $images = null)
-    {
-        $this->images = $images;
-
-        return $this;
-    }
-
-    /**
-     * Get images
-     *
-     * @return \GameBundle\Entity\Image
-     */
-    public function getImages()
-    {
-        return $this->images;
     }
 
     /**

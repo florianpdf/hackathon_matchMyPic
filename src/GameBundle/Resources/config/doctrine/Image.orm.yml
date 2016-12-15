@@ -31,6 +31,13 @@ GameBundle\Entity\Image:
 
 
     manyToOne:
+        challenges:
+            targetEntity: GameBundle\Entity\Challenge
         users:
             targetEntity: UserBundle\Entity\User
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+        prePersist: [ preUpload, setCreatedAtValue, setExpiresAtValue ]
+        preUpdate: [ preUpload, setUpdatedAtValue ]
+        postPersist: [ upload ]
+        postUpdate: [ upload ]
+        postRemove: [ removeUpload ]
