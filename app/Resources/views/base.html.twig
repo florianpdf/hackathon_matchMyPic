@@ -3,12 +3,13 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Match My Pic{% endblock %}</title>
-        {% block stylesheets %}
-
-            <link rel="stylesheet" href="{{ asset('css/foundation.css') }}">
-
-        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('css/foundation.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        {% endblock %}
+
     </head>
     <body>
 
@@ -18,6 +19,11 @@
         </div>
 
         <div class="top-bar" id="example-menu">
+            <div class="top-bar-left hide-for-small-only">
+                <ul class="menu" data-dropdown-menu>
+                    <li class="menu-text">Match My Pic</li>
+                </ul>
+            </div>
             <div class="top-bar-left hide-for-small-only">
                 <ul class="menu" data-dropdown-menu>
                     <li class="menu-text">Match My Pic</li>

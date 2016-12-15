@@ -2,6 +2,49 @@
 
 {% block body %}
 
-
+    <div class="row">
+        <h1>Liste des challenges</h1>
+        {% for i in 0..4 %}
+            {% if i % 2 == 0 %}
+                <div class="row">
+            {% endif %}
+            <div class="small-6 columns cards_challenge">
+                <a href="#"><img src="https://upload.wikimedia.org/wikipedia/en/1/17/Batman-BenAffleck.jpg" alt="batman"></a>
+                <ul class="accordion" data-accordion data-allow-all-closed="true">
+                    <li class="accordion-item" data-accordion-item>
+                        <a href="#" class="accordion-title">Titre du challenge</a>
+                        <div class="accordion-content" data-tab-content>
+                            Description du challenge
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            {% if i % 2 != 0 or i == 4 %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="row">
+        <h1>Challenge en attente</h1>
+        {% for i in 0..4 %}
+            {% if i % 2 == 0 %}
+                <div class="row">
+            {% endif %}
+            <div class="small-6 columns cards_challenge">
+                <a href="#"><img src="https://image.freepik.com/icones-gratuites/point-d-39-interrogation_318-52837.jpg" alt="batman"></a>
+                <ul class="accordion" data-accordion data-allow-all-closed="true">
+                    <li class="accordion-item" data-accordion-item>
+                        <a href="#" class="accordion-title">Titre du challenge</a>
+                        <div class="accordion-content" data-tab-content>
+                            Description du challenge
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            {% if i % 2 != 0 or i == 4 %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 
 {% endblock %}
