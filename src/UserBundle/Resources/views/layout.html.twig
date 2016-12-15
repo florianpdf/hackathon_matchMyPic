@@ -2,18 +2,10 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <!-- Compressed CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.css">
     </head>
-    <body>
-        <div>
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                <a href="{{ path('fos_user_security_logout') }}">
-                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                </a>
-            {% else %}
-                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-            {% endif %}
-        </div>
+    <body class="row align-center small-10 columns">
 
         {% if app.request.hasPreviousSession %}
             {% for type, messages in app.session.flashbag.all() %}
@@ -26,8 +18,13 @@
         {% endif %}
 
         <div>
+            <img src="http://www.vectortemplates.com/raster/batman/batman-logo-big.gif" alt="logo">
+
             {% block fos_user_content %}
             {% endblock fos_user_content %}
         </div>
+
+        <!-- Compressed JavaScript -->
+        <script src="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.js"></script>
     </body>
 </html>
