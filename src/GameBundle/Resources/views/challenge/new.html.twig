@@ -7,23 +7,40 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Challenge creation</h1>
+    <div class="row">
+        <div class="small-8 small-offset-2 columns">
+            <h1>Challenge creation</h1>
 
-    {{ form_start(form) }}
-        {{ form_row(form.nom) }}
-        {{ form_row(form.description) }}
-          <div class="dureeType">
-              {{ form_row(form.dureeType) }}
-              {{ form_row(form.duree) }}
+            {{ form_start(form) }}
+            {{ form_row(form.nom) }}
+            {{ form_row(form.description) }}
+            <div class="dureeType">
+                {{ form_row(form.dureeType) }}
+                {{ form_row(form.duree) }}
+            </div>
+            {{ form_row(form.type) }}
+            <input type="submit" class= "float-right medium button" value="Create" />
+            <a class="float-left medium button" href="{{ path('challenge_index') }}">Back to the list</a>
+            {{ form_end(form) }}
         </div>
-        {{ form_row(form.type) }}
-        {{ form_row(form.users) }}
-       <input type="submit" class= "float-center large button" value="Create" />
-    {{ form_end(form) }}
+    </div>
+{% endblock %}
 
-
-    <a class="float-left  button" href="{{ path('challenge_index') }}">Back to the list</a>
-
-
-
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('#gamebundle_challenge_dureeType').change(function () {
+            if ($('#gamebundle_challenge_dureeType').prop('checked') == true)
+            {
+                $('#gamebundle_challenge_duree').val(0);
+                $('#gamebundle_challenge_duree').parent( ".large-12" ).hide();
+                $('#gamebundle_challenge_duree').attr('min', '0');
+            }
+            else {
+                $('#gamebundle_challenge_duree').parent(".large-12").show();
+                $('#gamebundle_challenge_duree').attr('min', '1');
+                $('#gamebundle_challenge_duree').val(1);
+            }
+        });
+    </script>
 {% endblock %}

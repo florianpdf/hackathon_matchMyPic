@@ -41,9 +41,15 @@ class ChallengeController extends Controller
 //        $em->persist($user);
 //        $challenge->addUser($user);
         $form = $this->createForm('GameBundle\Form\ChallengeType', $challenge);
+        $form->remove('users');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user= $this->get('security.token_storage')->getToken()->getUser();
+
+            $challenge->setUserCreateur($user);
+            $challenge->setUserMeneur($user);
+            $challenge->setDateCreate(new \DateTime());
             $em->persist($challenge);
             $em->flush($challenge);
 
@@ -60,13 +66,24 @@ class ChallengeController extends Controller
      * Finds and displays a challenge entity.
      *
      */
-    public function showAction(Challenge $challenge)
+    public function showAction(Request $request, Challenge $challenge)
     {
-        $deleteForm = $this->createDeleteForm($challenge);
+        $em = $this->getDoctrine()->getManager();
+
+        $user= $this->get('security.token_storage')->getToken()->getUser();
+
+        $users = $em->getRepository('UserBundle:User')->qfindUserNotCreateur($challenge->getUserCreateur()->getId());
+        
+
+        var_dump($users);die;
+
+        if (isset($_POST['user'])) {
+            var_dump($_POST);
+        }
 
         return $this->render('GameBundle:challenge:show.html.twig', array(
             'challenge' => $challenge,
-            'delete_form' => $deleteForm->createView(),
+            'users' => $users,
         ));
     }
 

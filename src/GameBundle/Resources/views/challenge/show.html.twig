@@ -31,6 +31,20 @@
             </tr>
         </tbody>
     </table>
+    <table>
+        <thead>
+            <tr>
+                <th>Pseudo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
     <ul>
         <li>
@@ -38,11 +52,6 @@
         </li>
         <li>
             <a href="{{ path('challenge_edit', { 'id': challenge.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
         </li>
     </ul>
 {% endblock %}
