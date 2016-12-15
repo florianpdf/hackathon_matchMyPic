@@ -31,8 +31,10 @@ GameBundle\Entity\Image:
 
 
     manyToOne:
-        challenges:
+        challenge:
             targetEntity: GameBundle\Entity\Challenge
+            inversedBy: challenge
+
         users:
             targetEntity: UserBundle\Entity\User
     lifecycleCallbacks:

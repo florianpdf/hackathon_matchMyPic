@@ -24,6 +24,11 @@ GameBundle\Entity\Challenge:
             type: datetime
             column: date_create
 
+    oneToMany:
+        images:
+            targetEntity: GameBundle\Entity\Image
+            mappedBy: images
+
     manyToOne:
         user_meneur:
             targetEntity: UserBundle\Entity\User

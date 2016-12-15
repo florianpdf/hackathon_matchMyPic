@@ -10,7 +10,7 @@ namespace UserBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function qfindUserNotCreateur($createur_id)
+    public function findUserNotCreateur($createur_id)
     {
         $qb = $this->createQueryBuilder('u')
             ->select('u')

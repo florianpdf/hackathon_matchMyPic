@@ -14,6 +14,12 @@ use UserBundle\Entity\User;
  */
 class ChallengeController extends Controller
 {
+    const PHOTO_MENEUR = 1;
+    const PHOTO_MENEUR_TROUVEE = 2;
+    const PHOTO_USER = 3;
+    const PHOTO_USER_REJETEE = 4;
+    const PHOTO_USER_VALIDEE = 5;
+
     /**
      * Lists all challenge entities.
      *
@@ -58,7 +64,7 @@ class ChallengeController extends Controller
 
         return $this->render('GameBundle:challenge:new.html.twig', array(
             'challenge' => $challenge,
-            'form' => $form->createView(),
+            'form' =>   $form->createView(),
         ));
     }
 
@@ -72,10 +78,9 @@ class ChallengeController extends Controller
 
         $user= $this->get('security.token_storage')->getToken()->getUser();
 
-        $users = $em->getRepository('UserBundle:User')->qfindUserNotCreateur($challenge->getUserCreateur()->getId());
+        $users = $em->getRepository('UserBundle:User')->findUserNotCreateur($challenge->getUserCreateur()->getId());
         
 
-        var_dump($users);die;
 
         if (isset($_POST['user'])) {
             var_dump($_POST);
@@ -144,7 +149,9 @@ class ChallengeController extends Controller
         ;
     }
 
-    public function add_image_meneurAction(Challenge $challenge, Request $request)
+
+
+    public function addImageMeneurAction(Challenge $challenge, Request $request)
     {
         $image = new Image();
         $form = $this->createForm('GameBundle\Form\ImageType', $image);
@@ -153,10 +160,11 @@ class ChallengeController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $user= $this->get('security.context')->getToken()->getUser();
+            $user= $this->get('security.token_storage')->getToken()->getUser();
 
             $image->setDate(new \DateTime());
-            $image->setValidee(NULL);
+            $image->setType(self::PHOTO_MENEUR);
+            $image->setValidee(null);
             $image->setUsers($user);
             $em->persist($image);
             $em->flush($image);

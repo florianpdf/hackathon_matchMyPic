@@ -24,6 +24,6 @@ challenge_delete:
     methods:  DELETE
 
 challenge_add_image_meneur:
-    path:     /{id}/add_image_meneur
-    defaults: { _controller: "GameBundle:Challenge:add_image_meneur" }
+    path:     /{id}/add-image-meneur
+    defaults: { _controller: "GameBundle:Challenge:addImageMeneur" }
     methods:  [GET, POST]

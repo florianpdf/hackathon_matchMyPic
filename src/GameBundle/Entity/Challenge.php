@@ -278,4 +278,43 @@ class Challenge
     {
         return $this->users;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $images;
+
+
+    /**
+     * Add image
+     *
+     * @param \GameBundle\Entity\Image $image
+     *
+     * @return Challenge
+     */
+    public function addImage(\GameBundle\Entity\Image $image)
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \GameBundle\Entity\Image $image
+     */
+    public function removeImage(\GameBundle\Entity\Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
 }

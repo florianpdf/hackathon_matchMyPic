@@ -135,7 +135,7 @@ class Image
     /**
      * @var \GameBundle\Entity\Challenge
      */
-    private $challenges;
+    private $challenge;
 
     /**
      * @var \UserBundle\Entity\User
@@ -345,4 +345,28 @@ class Image
         return $this->users;
     }
 
+
+    /**
+     * Set challenge
+     *
+     * @param \GameBundle\Entity\Challenge $challenge
+     *
+     * @return Image
+     */
+    public function setChallenge(\GameBundle\Entity\Challenge $challenge = null)
+    {
+        $this->challenge = $challenge;
+
+        return $this;
+    }
+
+    /**
+     * Get challenge
+     *
+     * @return \GameBundle\Entity\Challenge
+     */
+    public function getChallenge()
+    {
+        return $this->challenge;
+    }
 }
