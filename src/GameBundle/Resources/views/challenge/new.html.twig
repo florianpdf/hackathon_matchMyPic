@@ -1,16 +1,29 @@
 {% extends 'base.html.twig' %}
+{% form_theme form 'foundation_5_layout.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/challenge.css') }}">
+    {{ parent() }}
+{% endblock %}
 
 {% block body %}
     <h1>Challenge creation</h1>
 
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        {{ form_row(form.nom) }}
+        {{ form_row(form.description) }}
+          <div class="dureeType">
+              {{ form_row(form.dureeType) }}
+              {{ form_row(form.duree) }}
+        </div>
+        {{ form_row(form.type) }}
+        {{ form_row(form.users) }}
+       <input type="submit" class= "float-center large button" value="Create" />
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('challenge_index') }}">Back to the list</a>
-        </li>
-    </ul>
+
+    <a class="float-left  button" href="{{ path('challenge_index') }}">Back to the list</a>
+
+
+
 {% endblock %}

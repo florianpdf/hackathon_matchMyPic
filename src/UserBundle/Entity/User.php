@@ -89,6 +89,10 @@ class User extends BaseUser
         return $this->prenom;
     }
 
+    public function getNomPrenom()
+    {
+        return $this->prenom.' '.$this->nom;
+    }
     /**
      * Set score
      *

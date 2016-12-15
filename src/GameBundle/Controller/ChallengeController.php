@@ -5,6 +5,7 @@ namespace GameBundle\Controller;
 use GameBundle\Entity\Challenge;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use UserBundle\Entity\User;
 
 /**
  * Challenge controller.
@@ -34,11 +35,14 @@ class ChallengeController extends Controller
     public function newAction(Request $request)
     {
         $challenge = new Challenge();
+        $em = $this->getDoctrine()->getManager();
+//        $user = new User();
+//        $em->persist($user);
+//        $challenge->addUser($user);
         $form = $this->createForm('GameBundle\Form\ChallengeType', $challenge);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $em->persist($challenge);
             $em->flush($challenge);
 
