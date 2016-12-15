@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="row">
+    <h1>Liste des challenges</h1>
+    {% set i = 0 %}
+    {% set size_array = user.chalenges|length %}
+    {% for challenge in user.chalenges %}
+        {% if i % 2 == 0 %}
+            <div class="row">
+        {% endif %}
+        <div class="small-6 columns cards_challenge">
+            <a href="#"><img src="https://upload.wikimedia.org/wikipedia/en/1/17/Batman-BenAffleck.jpg" alt="batman"></a>
+            <ul class="accordion" data-accordion data-allow-all-closed="true">
+                <li class="accordion-item" data-accordion-item>
+                    <a href="" class="accordion-title">{{ challenge.nom|capitalize }}</a>
+                    <div class="accordion-content" data-tab-content>
+                        {{ challenge.description }}<br>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        {% if i % 2 != 0 or i == size_array %}
+            </div>
+        {% endif %}
+        {% set i = i+1 %}
+    {% endfor %}
+</div>
+{% endblock %}

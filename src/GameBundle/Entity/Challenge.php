@@ -319,4 +319,33 @@ class Challenge
     {
         return $this->images;
     }
+    /**
+     * @var boolean
+     */
+    private $etat;
+
+
+    /**
+     * Set etat
+     *
+     * @param boolean $etat
+     *
+     * @return Challenge
+     */
+    public function setEtat($etat)
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * Get etat
+     *
+     * @return boolean
+     */
+    public function getEtat()
+    {
+        return $this->etat;
+    }
 }
