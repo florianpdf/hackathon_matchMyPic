@@ -194,6 +194,7 @@ class ChallengeController extends Controller
         ));
     }
 
+
     public function challengeMeneurPasseAction(Challenge $challenge)
     {
         $em = $this->getDoctrine()->getManager();
