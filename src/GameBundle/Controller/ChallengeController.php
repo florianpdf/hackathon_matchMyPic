@@ -193,4 +193,20 @@ class ChallengeController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    public function challengeMeneurPasseAction(Challenge $challenge)
+    {
+        $em = $this->getDoctrine()->getManager();
+       // requete pour recup des users appartenant au group et n'étant pas le meneur actuel
+        $users = $em->getRepository('UserBundle:User')->findUserInGroupNotMeneur($challenge);
+        $meneur = $users[array_rand($users)];
+        $challenge->setUserMeneur($meneur);
+
+        // service pour envoyer un mail et un push au new meneur
+        // ...
+        // ...
+
+        return $this->redirectToRoute('challenge_index');
+
+    }
 }

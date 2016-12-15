@@ -8,8 +8,8 @@
             {{  form_label(form.src, 'Télecharger une image', {'label_attr': {'class':'small button' }}) }}
             {{ form_widget(form.src, {'attr': {'class':'show-for-sr ' }}) }}
 
-            {% if app.user!=challenge.userCreateur %}
-                 <a class="warning button" href="{{ path('challenge_passe') }}">Passer</a>
+            {% if challenge.images is defined %}
+                 <a class="warning button" href="{{ path('challenge_passe', {'id':challenge.id}) }}">Passer</a>
 
             {% endif %}
 
