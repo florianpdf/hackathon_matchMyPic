@@ -3,6 +3,7 @@
 namespace GameBundle\Controller;
 
 use GameBundle\Entity\Challenge;
+use GameBundle\Entity\Image;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -120,5 +121,32 @@ class ChallengeController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    public function add_image_meneurAction(Challenge $challenge, Request $request)
+    {
+        $image = new Image();
+        $form = $this->createForm('GameBundle\Form\ImageType', $image);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $user= $this->get('security.context')->getToken()->getUser();
+
+            $image->setDate(new \DateTime());
+            $image->setValidee(NULL);
+            $image->setUsers($user);
+            $em->persist($image);
+            $em->flush($image);
+
+            return $this->redirectToRoute('challenge_show', array('id' => $challenge->getId()));
+        }
+
+        return $this->render('GameBundle:challenge:add_image_meneur.html.twig', array(
+            'challenge' => $challenge,
+            'image' => $image,
+            'form' => $form->createView(),
+        ));
     }
 }

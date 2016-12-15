@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="small-8 small-offset-2 columns">
+            <h3>Vous êtes le meneur du challenge: {{ challenge.nom }}</h3>
+            {{ form_start(form) }}
+            {{  form_label(form.src, 'Télecharger une image', {'label_attr': {'class':'small button' }}) }}
+            {{ form_widget(form.src, {'attr': {'class':'show-for-sr ' }}) }}
+
+            {{  form_label(form.type) }}
+            {{ form_widget(form.type) }}
+
+            <input type="submit" class="float-right success button" value="Create" />
+            {{ form_end(form) }}
+            <a class="warning button" href="{{ path('challenge_index') }}">Back to the list</a>
+        </div>
+    </div>
+
+
+{% endblock %}

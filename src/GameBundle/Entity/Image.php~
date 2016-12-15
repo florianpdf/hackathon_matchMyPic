@@ -2,17 +2,39 @@
 
 namespace GameBundle\Entity;
 
+use Doctrine\ORM;
 /**
  * Image
  */
 class Image
 {
+    protected function getUploadDir()
+    {
+        return 'uploads/image';
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->src ? null : $this->getUploadDir().'/'.$this->src;
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->src ? null : $this->getUploadRootDir().'/'.$this->src;
+    }
+
+
 
     ##########################################
     ########## Generate Code #################
     ##########################################
 
-
+    public $file;
     /**
      * @var integer
      */
@@ -47,6 +69,11 @@ class Image
      * @var \DateTime
      */
     private $date;
+
+    /**
+     * @var \GameBundle\Entity\Challenge
+     */
+    private $challenges;
 
     /**
      * @var \UserBundle\Entity\User
@@ -209,6 +236,30 @@ class Image
     }
 
     /**
+     * Set challenges
+     *
+     * @param \GameBundle\Entity\Challenge $challenges
+     *
+     * @return Image
+     */
+    public function setChallenges(\GameBundle\Entity\Challenge $challenges = null)
+    {
+        $this->challenges = $challenges;
+
+        return $this;
+    }
+
+    /**
+     * Get challenges
+     *
+     * @return \GameBundle\Entity\Challenge
+     */
+    public function getChallenges()
+    {
+        return $this->challenges;
+    }
+
+    /**
      * Set users
      *
      * @param \UserBundle\Entity\User $users
@@ -231,4 +282,5 @@ class Image
     {
         return $this->users;
     }
+
 }
