@@ -20,4 +20,18 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getResult();
     }
+
+    public function findUserInGroupNotMeneur($challenge)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->select('u')
+            ->leftJoin('GameBundle:Challenge', 'c' )
+
+
+            ->andWhere('u.id != :user')
+            ->setParameter('user', $challenge->getUserMeneur())
+            ->getQuery();
+
+        return $qb->getResult();
+    }
 }

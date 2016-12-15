@@ -60,6 +60,11 @@ class Challenge
     private $users;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $images;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -278,10 +283,7 @@ class Challenge
     {
         return $this->users;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $images;
+
 
 
     /**

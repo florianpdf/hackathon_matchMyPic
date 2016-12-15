@@ -27,3 +27,8 @@ challenge_add_image_meneur:
     path:     /{id}/add-image-meneur
     defaults: { _controller: "GameBundle:Challenge:addImageMeneur" }
     methods:  [GET, POST]
+
+challenge_passe:
+    path:     /{id}/passe-challenge
+    defaults: { _controller: "GameBundle:Challenge:challengeMeneurPasse" }
+    methods:  [GET]
