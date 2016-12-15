@@ -27,6 +27,7 @@ class ChallengeType extends AbstractType
             )
             ->add('dureeType', CheckboxType::class, ['label'=> 'Durée infinie',
                                                      'mapped'=>false,
+                                                        'required' => false,
             ])
             ->add('duree', null, ['label'=>'Durée (heures)', 'attr'=> [
                                                                 'min'=>1,
@@ -37,11 +38,12 @@ class ChallengeType extends AbstractType
 //            ->add('images')
 //            ->add('user_meneur')
 //            ->add('user_createur')
-            ->add('users', CollectionType::class, [    'entry_type'   => EntityType::class,
-                                                     'entry_options'  => ['class'=>'UserBundle\Entity\User',
-                                                                          'choice_label'=>'nomprenom'
-                                                            ],
-                                                         'allow_add'=>true]);
+//            ->add('users', CollectionType::class, [    'entry_type'   => EntityType::class,
+//                                                     'entry_options'  => ['class'=>'UserBundle\Entity\User',
+//                                                                          'choice_label'=>'nomprenom'
+//                                                            ],
+//                                                         'allow_add'=>true])
+            ;
     }
     
     /**
