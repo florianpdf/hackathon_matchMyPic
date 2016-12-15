@@ -59,7 +59,10 @@ class ChallengeController extends Controller
             $em->persist($challenge);
             $em->flush($challenge);
 
-            return $this->redirectToRoute('challenge_show', array('id' => $challenge->getId()));
+            if ($challenge->getType() == "private")
+                return $this->redirectToRoute('challenge_show', array('id' => $challenge->getId()));
+            else
+                return $this->redirectToRoute('game_homepage');
         }
 
         return $this->render('GameBundle:challenge:new.html.twig', array(
@@ -72,24 +75,36 @@ class ChallengeController extends Controller
      * Finds and displays a challenge entity.
      *
      */
-    public function showAction(Request $request, Challenge $challenge)
+    public function showAction(Challenge $challenge)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $user= $this->get('security.token_storage')->getToken()->getUser();
-
         $users = $em->getRepository('UserBundle:User')->findUserNotCreateur($challenge->getUserCreateur()->getId());
-        
-
-
-        if (isset($_POST['user'])) {
-            var_dump($_POST);
-        }
 
         return $this->render('GameBundle:challenge:show.html.twig', array(
             'challenge' => $challenge,
             'users' => $users,
         ));
+    }
+
+    /**
+     * Inscription des users sur un challenge privé
+     *
+     */
+    public function inscriptionChallengeAction(Challenge $challenge){
+        $em = $this->getDoctrine()->getManager();
+
+        $users = $_REQUEST['user_id'];
+        $participants = $em->getRepository('UserBundle:User')->findById($users);
+
+        foreach ($participants as $participant){
+            $challenge->addUser($participant);
+            $participant->addChalenge($challenge);
+            $em->persist($participant);
+            $em->persist($challenge);
+        }
+        $em->flush();
+
+        return $this->redirectToRoute('challenge_show', array('id' => $challenge->getId()));
     }
 
     /**

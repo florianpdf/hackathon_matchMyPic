@@ -1,50 +1,36 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Challenge</h1>
-
-    <table>
-        <tbody>
+    <h1>Challenge inscription</h1>
+    <form action="{{ path('challenge_private_inscription', { 'id' : challenge.id }) }}" method="post">
+        <table>
+            <thead>
             <tr>
-                <th>Id</th>
-                <td>{{ challenge.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ challenge.nom }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ challenge.description }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ challenge.type }}</td>
-            </tr>
-            <tr>
-                <th>Duree</th>
-                <td>{{ challenge.duree }}</td>
-            </tr>
-            <tr>
-                <th>Datecreate</th>
-                <td>{% if challenge.dateCreate %}{{ challenge.dateCreate|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
-    <table>
-        <thead>
-            <tr>
+                <th>Inscription</th>
                 <th>Pseudo</th>
+                <th>Prenom</th>
+                <th>Nom</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             {% for user in users %}
-            <tr>
-                <td>{{ user.username }}</td>
-            </tr>
+                <tr>
+                    <td>
+                        {% if user in challenge.users %}
+                            <input value="{{ user.id }}" name="user_id[]" type="checkbox" checked>
+                        {% else %}
+                            <input value="{{ user.id }}" name="user_id[]" type="checkbox">
+                        {% endif %}
+                    </td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.prenom }}</td>
+                    <td>{{ user.nom }}</td>
+                </tr>
             {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        <input type="submit" value="Ajouter les utilisateurs au challenge">
+    </form>
 
     <ul>
         <li>
