@@ -33,6 +33,21 @@ challenge_private_inscription:
     defaults: { _controller: GameBundle:Challenge:inscriptionChallenge }
     methods:  [GET, POST]
 
+challenge_public_inscription:
+    path:     /{id}/inscription-challenge
+    defaults: { _controller: "GameBundle:Challenge:challengePublicInscription" }
+    methods:  [GET]
+
+challenge_desinscription:
+    path:     /{id}/desinscription-challenge
+    defaults: { _controller: "GameBundle:Challenge:challengeDesinscription" }
+    methods:  [GET]
+
+challenge_en_cours:
+    path:     /challenge-en-cours
+    defaults: { _controller: "GameBundle:Challenge:challengeEnCours" }
+    methods:  [GET]
+
 challenge_passe:
     path:     /{id}/passe-challenge
     defaults: { _controller: "GameBundle:Challenge:challengeMeneurPasse" }

@@ -210,4 +210,45 @@ class ChallengeController extends Controller
         return $this->redirectToRoute('challenge_index');
 
     }
+
+    public function challengePublicInscriptionAction(Challenge $challenge)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user= $this->get('security.token_storage')->getToken()->getUser();
+
+        $challenge->addUser($user);
+        $user->addChalenge($challenge);
+        $em->persist($user);
+        $em->persist($challenge);
+
+        $em->flush();
+
+        return $this->redirectToRoute('challenge_show', array('id' => $challenge->getId()));
+    }
+
+    public function challengeEnCoursAction()
+    {
+        $user= $this->get('security.token_storage')->getToken()->getUser();
+
+        return $this->render('GameBundle:challenge:challenge_en_cours.html.twig', array(
+            'user' => $user,
+        ));
+    }
+
+    public function challengeDesinscriptionAction(Challenge $challenge)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user= $this->get('security.token_storage')->getToken()->getUser();
+
+        $challenge->removeUser($user);
+        $user->removeChalenge($challenge);
+        $em->persist($user);
+        $em->persist($challenge);
+
+        $em->flush();
+
+        return $this->redirectToRoute('game_homepage');
+    }
 }

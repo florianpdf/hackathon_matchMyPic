@@ -23,6 +23,8 @@ GameBundle\Entity\Challenge:
         dateCreate:
             type: datetime
             column: date_create
+        etat:
+            type: boolean
 
     oneToMany:
         images:

@@ -8,6 +8,15 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('GameBundle:Default:index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+
+        $challenges = $em->getRepository('GameBundle:Challenge')->findAll();
+
+        $user= $this->get('security.token_storage')->getToken()->getUser();
+
+        return $this->render('GameBundle:Default:index.html.twig', array(
+            'challenges' => $challenges,
+            'user' => $user,
+        ));
     }
 }

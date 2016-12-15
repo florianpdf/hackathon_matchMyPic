@@ -41,7 +41,7 @@
                     {% if app.request.attributes.get('_route') != "game_homepage" %}
                         <li><a href="#">Challenges</a></li>
                     {% endif %}
-                    <li><a href="#">Challenges en cours</a></li>
+                    <li><a href="{{ path('challenge_en_cours') }}">Challenges en cours</a></li>
                 </ul>
             </div>
         </div>
