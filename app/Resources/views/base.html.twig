@@ -41,24 +41,25 @@
                     </ul>
                 </div>
             </div>
-
-            {% for type, messages in app.session.flashbag.all() %}
-                {% for message in messages %}
-                    <div class="{{ type }} callout" data-closable>
-                        {{ message }}
-                    </div>
-                    {# Or even with css class rendering:
-                      <div class="flash-{{type}}">{{message}}</div>
-                     #}
-                {% endfor %}
-            {% endfor %}
-
         {% else %}
             <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
                 <div class="title-bar-title">Match My Pic</div>
                 <a class="top-bar-right" href="{{ path('fos_user_security_login') }}">Se connecter</a>
             </div>
         {% endif %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="{{ type }} callout" data-closable>
+                    {{ message }}
+                    <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+
+
 
         {% block body %}{% endblock %}
         {% block javascripts %}

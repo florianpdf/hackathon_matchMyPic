@@ -255,14 +255,29 @@ class ChallengeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
        // requete pour recup des users appartenant au group et n'étant pas le meneur actuel
-        $users = $em->getRepository('UserBundle:User')->findByChalenges($challenge);
-        $meneur = $users[array_rand($users)];
+        $users = $challenge->getUsers();
+        $meneur = $challenge->getUserMeneur();
+        foreach($users as $user) {
+            if($user !== $challenge->getUserMeneur()) {
+                $tabUser[]=$user;
+            }
+        }
+        if (isset($tabUser)) {
+            $meneur = $tabUser[array_rand($tabUser)];
+            $this->addFlash(
+                'success',
+                'Vous n\'êtes plus meneur!'
+            );
+        } else {
+             $this->addFlash(
+                'alert',
+                'Impossible de passer, vous êtes le seul participant !'
+            );
+
+
+        }
         $challenge->setUserMeneur($meneur);
 
-        $this->addFlash(
-            'success',
-            'Vous n\'êtes plus meneur!'
-        );
         // service pour envoyer un mail et un push au new meneur
         // ...
         // ...
