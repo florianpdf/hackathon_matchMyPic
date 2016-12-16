@@ -9,41 +9,40 @@
     {% endif %}
 
     <div class="row">
-        <h1>Liste des challenges</h1>
+        <h1 class="title">Liste des challenges</h1>
         {% set i = 0 %}
         {% set size_array = challenges|length %}
         {% for challenge in challenges if challenge.etat == true %}
           {% if i % 2 == 0 %}
                 <div class="row">
             {% endif %}
-            <div class="small-6 columns cards_challenge">
-                {% if app.user in challenge.users %}
-                    <a href="{{ path('challenge_add_image_user', {'id': challenge.id }) }}">
-                        {{ render(controller('GameBundle:Challenge:thumbnail', {'id':challenge.id})) }}
-                    </a>
-                {% else %}
+
+            <a href="{{ path('challenge_add_image_user', {'id': challenge.id}) }}">
+                <div class="small-6 columns cards_challenge">
                     {{ render(controller('GameBundle:Challenge:thumbnail', {'id':challenge.id})) }}
-                {% endif %}
-                <ul class="accordion" data-accordion data-allow-all-closed="true">
-                    <li class="accordion-item" data-accordion-item>
-                        <a href="#" class="accordion-title">{{ challenge.nom|capitalize }}</a>
-                        <div class="accordion-content" data-tab-content>
-                            {{ challenge.description }}<br>
-                            {% if app.user.username is defined %}
-                                {% if challenge in user.chalenges %}
-                                    <div class="text-center">
-                                        <a href="{{ path('challenge_desinscription', {'id': challenge.id}) }}" class="button alert">Je me désinscrit</a>
-                                    </div>
-                                {% else %}
-                                    <div class="text-center">
-                                        <a href="{{ path('challenge_public_inscription', {'id': challenge.id}) }}" class="button">Je participe !</a>
-                                    </div>
-                                {% endif %}
-                            {% endif %}
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                {#<ul class="accordion" data-accordion data-allow-all-closed="true">#}
+                    {#<li class="accordion-item" data-accordion-item>#}
+                        {#<a href="#" class="accordion-title">{{ challenge.nom|capitalize }}</a>#}
+                        {#<div class="accordion-content" data-tab-content>#}
+                            {#{{ challenge.description }}<br>#}
+                            {#{% if challenge.type == 'private' %}#}
+                            {#{% else %}#}
+                                {#{% if challenge in user.chalenges %}#}
+                                    {#<div class="text-center">#}
+                                        {#<a href="{{ path('challenge_desinscription', {'id': challenge.id}) }}" class="button alert">Je me désinscrit</a>#}
+                                    {#</div>#}
+                                {#{% else %}#}
+                                    {#<div class="text-center">#}
+                                        {#<a href="{{ path('challenge_public_inscription', {'id': challenge.id}) }}" class="button">Je participe !</a>#}
+                                    {#</div>#}
+                                {#{% endif %}#}
+                            {#{% endif %}#}
+                        {#</div>#}
+                    {#</li>#}
+                {#</ul>#}
+                </div>
+            </a>
+
             {% if i % 2 != 0 or i == size_array %}
                 </div>
             {% endif %}
