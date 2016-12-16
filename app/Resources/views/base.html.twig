@@ -18,13 +18,13 @@
         {% if app.user.username is defined %}
             <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
                 <button class="menu-icon" type="button" data-toggle></button>
-                <div class="title-bar-title">Match My Pic</div>
+                <div class="title-bar-title"><a href="{{ path('game_homepage') }}"><img class="small_logo" src="{{ asset('images/logo.png') }}"/>Match My Pic</a></div>
             </div>
 
             <div class="top-bar" id="example-menu">
                 <div class="top-bar-left hide-for-small-only">
                     <ul class="menu" data-dropdown-menu>
-                        <a href="{{ path('game_homepage') }}"><li class="menu-text">Match My Pic</li></a>
+                        <a href="{{ path('game_homepage') }}"><li class="menu-text"><img class="small_logo" src="{{ asset('images/logo.png') }}"/>Match My Pic</li></a>
                     </ul>
                 </div>
                 <div class="top-bar-right">

@@ -48,6 +48,15 @@
     margin-top:2em;
     margin-bottom:2em;
 }
+.small_logo {
+    width:25px;
+
+}
 .title {
+    text-align: center;
+}
+.subtitle {
+    font-size:0.8em;
+    color:#0c4d78;
     text-align: center;
 }

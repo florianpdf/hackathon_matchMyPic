@@ -9,6 +9,7 @@
 
     <div class="row ">
         <h1 class="title">{{ challenge.nom }}</h1>
+        <h2 class="subtitle">Meneur {{ challenge.userMeneur.username }}<span class="badge">{{ challenge.userMeneur.score }}</span></h2>
         <p class="callout">{{ challenge.description }}</p>
 
     </div>
@@ -16,7 +17,9 @@
     {% else %}
         {% if challenge in user.chalenges %}
             <div class="text-center">
+                {% if challenge.userMeneur!=app.user %}
                 <a href="{{ path('challenge_desinscription', {'id': challenge.id}) }}" class="button alert">Je me désinscrit</a>
+                {% endif %}
             </div>
             {% else %}
             <div class="text-center">
@@ -62,6 +65,8 @@
                         <div class="row text-center">
                             <img src="{{ asset('uploads/promotion/') }}{{ images_user[0].src }}">
                         </div>
+                        <h2 class="subtitle">Proposé par {{ image.user.username }}<span class="badge">{{ image.user.score }}</span></h2>
+
                         <div id="distance_between_too_shoot" class="text-center ">
                             {# distance entre les deux photos injecté en JS #}
                         </div>
