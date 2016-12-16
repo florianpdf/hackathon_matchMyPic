@@ -34,7 +34,7 @@
                             <a href="#">{{ app.user.prenom|capitalize }} {{ app.user.nom|capitalize }}</a>
                             <ul class="menu vertical">
                                 <li><a href="#">Score: {{ app.user.score }}</a></li>
-                                <li><a href="#">Nb de challenge en cours: {{ app.user.chalenges|length }}</a></li>
+                                <li><a href="{{ path('challenge_en_cours') }}">Nb de challenge en cours: {{ app.user.chalenges|length }}</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -71,7 +71,7 @@
             <script src="{{ asset('js/vendor/jquery.js') }}"></script>
             <script src="{{ asset('js/vendor/foundation.js') }}"></script>
             <script src="{{ asset('js/vendor/what-input.js') }}"></script>
-            {#<script src="{{ asset('js/app.js') }}"></script>#}
+            <script src="{{ asset('js/app.js') }}"></script>
 
         {% endblock %}
     </body>

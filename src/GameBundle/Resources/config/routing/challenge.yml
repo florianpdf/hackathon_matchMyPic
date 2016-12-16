@@ -77,3 +77,4 @@ challenge_classement:
     path:     /classement
     defaults: { _controller: "GameBundle:Challenge:classement" }
     methods:  [GET]
+

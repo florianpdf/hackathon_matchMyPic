@@ -19,4 +19,5 @@ class DefaultController extends Controller
             'user' => $user,
         ));
     }
+
 }

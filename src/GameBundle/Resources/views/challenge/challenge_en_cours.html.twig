@@ -14,7 +14,7 @@
                 <p>Vous n'avez pas de challenge en cours</p>
             {% else %}
                 <div class="small-6 columns cards_challenge">
-                    <a href="{{ path('challenge_add_image_user', {'id': challenge.id }) }}"><{{ render(controller('GameBundle:Challenge:thumbnail', {'id':challenge.id})) }}</a>
+                    <a href="{{ path('challenge_add_image_user', {'id': challenge.id }) }}">{{ render(controller('GameBundle:Challenge:thumbnail', {'id':challenge.id})) }}</a>
                     <ul class="accordion" data-accordion data-allow-all-closed="true">
                         <li class="accordion-item" data-accordion-item>
                             <a href="" class="accordion-title">{{ challenge.nom|capitalize }}</a>
