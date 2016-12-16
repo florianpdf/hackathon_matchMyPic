@@ -35,6 +35,16 @@ class ChallengeController extends Controller
         ));
     }
 
+    public function thumbnailAction(Challenge $challenge)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $image = $em->getRepository('GameBundle:Image')->findOneBy(array('challenge'=>$challenge, 'type'=>self::PHOTO_MENEUR));
+        return $this->render('GameBundle:challenge:imageThumbnail.html.twig', array(
+            'image' => $image,
+        ));
+
+    }
+
     /**
      * Creates a new challenge entity.
      *
@@ -42,10 +52,9 @@ class ChallengeController extends Controller
     public function newAction(Request $request)
     {
         $challenge = new Challenge();
+        $challenge->setDuree(1);
+        $challenge->setType('public');
         $em = $this->getDoctrine()->getManager();
-//        $user = new User();
-//        $em->persist($user);
-//        $challenge->addUser($user);
         $form = $this->createForm('GameBundle\Form\ChallengeType', $challenge);
         $form->remove('users');
         $form->handleRequest($request);
@@ -56,13 +65,15 @@ class ChallengeController extends Controller
             $challenge->setUserCreateur($user);
             $challenge->setUserMeneur($user);
             $challenge->setDateCreate(new \DateTime());
+            $challenge->setEtat(false);
             $em->persist($challenge);
             $em->flush($challenge);
 
-            if ($challenge->getType() == "private")
+            if ($challenge->getType() == "private") {
                 return $this->redirectToRoute('challenge_show', array('id' => $challenge->getId()));
-            else
-                return $this->redirectToRoute('game_homepage');
+            } else {
+                return $this->redirectToRoute('challenge_add_image_meneur', array('id' => $challenge->getId()));
+            }
         }
 
         return $this->render('GameBundle:challenge:new.html.twig', array(
@@ -176,13 +187,15 @@ class ChallengeController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $user= $this->get('security.token_storage')->getToken()->getUser();
-
+            $challenge->setEtat(1);
+            $em->persist($challenge);
+            $image->setChallenge($challenge);
             $image->setDate(new \DateTime());
             $image->setType(self::PHOTO_MENEUR);
             $image->setValidee(null);
             $image->setUsers($user);
             $em->persist($image);
-            $em->flush($image);
+            $em->flush();
 
             return $this->redirectToRoute('challenge_show', array('id' => $challenge->getId()));
         }
@@ -199,10 +212,14 @@ class ChallengeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
        // requete pour recup des users appartenant au group et n'étant pas le meneur actuel
-        $users = $em->getRepository('UserBundle:User')->findUserInGroupNotMeneur($challenge);
+        $users = $em->getRepository('UserBundle:User')->findByChalenges($challenge);
         $meneur = $users[array_rand($users)];
         $challenge->setUserMeneur($meneur);
 
+        $this->addFlash(
+            'success',
+            'Vous n\'êtes plus meneur!'
+        );
         // service pour envoyer un mail et un push au new meneur
         // ...
         // ...

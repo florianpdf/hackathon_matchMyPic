@@ -5,8 +5,8 @@
         <div class="small-8 small-offset-2 columns">
             <h3>Vous êtes le meneur du challenge: {{ challenge.nom }}</h3>
             {{ form_start(form) }}
-            {{  form_label(form.src, 'Télecharger une image', {'label_attr': {'class':'small button' }}) }}
-            {{ form_widget(form.src, {'attr': {'class':'show-for-sr ' }}) }}
+            {{ form_label(form.file, 'Télecharger une image', {'label_attr': {'class':'small button' }}) }}
+            {{ form_widget(form.file, {'attr': {'class':'show-for-sr ' }}) }}
 
             {% if challenge.images is defined %}
                  <a class="warning button" href="{{ path('challenge_passe', {'id':challenge.id}) }}">Passer</a>
@@ -19,5 +19,22 @@
         </div>
     </div>
 
+    <script>
+        var x = document.getElementById("demo");
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+        function showPosition(position) {
+            $('#gamebundle_image_lat').val(position.coords.latitude);
+            $('#gamebundle_image_lng').val(position.coords.longitude);
+        }
+        getLocation();
+        showPosition();
+    </script>
 
 {% endblock %}
+

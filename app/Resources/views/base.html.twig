@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Match My Pic{% endblock %}</title>
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}" />
 
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/foundation.css') }}">
@@ -12,6 +12,7 @@
 
     </head>
     <body>
+
 
         <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
             <button class="menu-icon" type="button" data-toggle></button>
@@ -32,6 +33,7 @@
             <div class="top-bar-right">
                 <ul class="menu vertical medium-horizontal" data-dropdown-menu>
                     <li>
+
                         <a href="#">{{ app.user.prenom|capitalize }} {{ app.user.nom|capitalize }}</a>
                         <ul class="menu vertical">
                             <li><a href="#">Score: {{ app.user.score }}</a></li>
@@ -45,6 +47,19 @@
                 </ul>
             </div>
         </div>
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="{{ s }} callout" data-closable>
+                    {{ message }}
+                </div>
+                {# Or even with css class rendering:
+                  <div class="flash-{{type}}">{{message}}</div>
+                 #}
+            {% endfor %}
+        {% endfor %}
+
+
+
         {% block body %}{% endblock %}
         {% block javascripts %}
 

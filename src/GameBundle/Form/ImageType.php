@@ -6,6 +6,7 @@ use GameBundle\GameBundle;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,11 +19,11 @@ class ImageType extends AbstractType
     {
         $builder
             //->add('src')
-            ->add('src', FileType::class, array('label' => 'Image', 'required' => true))
+            ->add('file', FileType::class, array('label' => 'Image', 'required' => true))
             //->add('validee')
             //->add('type')
-            ->add('lat')
-            ->add('lng')
+            ->add('lat', HiddenType::class)
+            ->add('lng', HiddenType::class)
             //->add('date')
             //->add('challenges', EntityType::class, array('class' => 'GameBundle\Entity\Challenge', 'choice_label' => 'nom'))
            // ->add('users')

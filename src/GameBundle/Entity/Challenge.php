@@ -295,6 +295,7 @@ class Challenge
      */
     public function addImage(\GameBundle\Entity\Image $image)
     {
+        $image->setChallenge($this);
         $this->images[] = $image;
 
         return $this;

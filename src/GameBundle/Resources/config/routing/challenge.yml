@@ -52,3 +52,8 @@ challenge_passe:
     path:     /{id}/passe-challenge
     defaults: { _controller: "GameBundle:Challenge:challengeMeneurPasse" }
     methods:  [GET]
+
+challenge_thumbnail:
+    path:     /{id}/thumbnail
+    defaults: { _controller: "GameBundle:Challenge:thumbnail" }
+    methods:  [GET]
