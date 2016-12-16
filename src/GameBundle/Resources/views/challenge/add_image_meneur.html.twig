@@ -1,24 +1,33 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="row">
-        <div class="small-8 small-offset-2 columns">
-            <h3>Vous êtes le meneur du challenge: {{ challenge.nom }}</h3>
+    <div class="row align-center small-10 columns ">
+        <h3 class="title">Vous êtes le meneur du challenge: {{ challenge.nom }}</h3>
+        <div class="align-middle">
             {{ form_start(form) }}
-            {{ form_label(form.file, 'Télecharger une image', {'label_attr': {'class':'small button' }}) }}
-            {{ form_widget(form.file, {'attr': {'class':'show-for-sr ' }}) }}
+            <div class="row">
+                {{ form_label(form.file, 'Télecharger une image', {'label_attr': {'class':'small button float-center' }}) }}
+                {{ form_widget(form.file, {'attr': {'class':'show-for-sr' }}) }}
+            </div>
+            <div class="row">
+                {% if challenge.images is defined %}
+                    <a class="warning small button float-center" href="{{ path('challenge_passe', {'id':challenge.id}) }}">Passer son tour</a>
+                {% endif %}
+            </div>
+            <div class="text-center">
+                <a class="button alert button" href="{{ path('challenge_index') }}">Retour à l'accueil</a>
+                <input type="submit" class="success button" value="Create" />
+                {{ form_end(form) }}
+            </div>
 
-            {% if challenge.images is defined %}
-                 <a class="warning button" href="{{ path('challenge_passe', {'id':challenge.id}) }}">Passer</a>
-
-            {% endif %}
-
-            <input type="submit" class="float-right success button" value="Create" />
-            {{ form_end(form) }}
-            <a class="warning button" href="{{ path('challenge_index') }}">Back to the list</a>
         </div>
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
     <script>
         var x = document.getElementById("demo");
         function getLocation() {
@@ -37,4 +46,3 @@
     </script>
 
 {% endblock %}
-

@@ -18,11 +18,9 @@
         </ul>
     </div>
     {% if image_meneur is not null %}
-        <div class="row">
-            <img src="{{ asset('uploads/promotion/') }}{{ image_meneur.src }}" alt="">
-        </div>
-        <div class="row">
-            <h1>MAP</h1>
+        <h4 class="title">Image du challenge</h4>
+        <div class="text-center row">
+            <img width="50%" src="{{ asset('uploads/promotion/') }}{{ image_meneur.src }}" alt="">
         </div>
         {% if image_meneur.users != user %}
             {% if image_user is null %}
@@ -33,33 +31,55 @@
                     {{ form_widget(form.lng, {'type': 'hidden'}) }}
                     {{ form_widget(form.lat, {'type': 'hidden'}) }}
 
-                    <input type="submit" class="float-center success button" value="Create" />
+                    <div class="text-center">
+                        <input type="submit" class="success button" value="Proposer" />
+                    </div>
                     {{ form_end(form) }}
                 </div>
             {% else %}
-                <div class="row">
+                <h4 class="title">Image proposée</h4>
+                <div class="row text-center">
                     <img src="{{ asset('uploads/promotion/') }}{{ image_user.src }}" alt="">
                 </div>
             {% endif %}
         {% endif %}
         {% if images_user is not empty %}
-            <div id='slider' class='swipe'>
-                <div class='swipe-wrap'>
+            <div class="row align-center small-10 columns ">
+                <div class="align-middle">
                     {% if images_user[0] is defined %}
-                        <img src="{{ asset('uploads/promotion/') }}{{ images_user[0].src }}">
-                        <a href="{{ path('challenge_validation_img', {'id' : images_user[0].id }) }}">Valider</a>
-                        <a href="{{ path('challenge_delete_wrong_img', {'id' : images_user[0].id }) }}">Refuser</a>
+                        <div class="row text-center">
+                            <img src="{{ asset('uploads/promotion/') }}{{ images_user[0].src }}">
+                        </div>
+                        <div id="distance_between_too_shoot" class="text-center ">
+                            {# distance entre les deux photos injecté en JS #}
+                        </div>
+                        <div class="text-center">
+                            <a class="button success" href="{{ path('challenge_validation_img', {'id' : images_user[0].id }) }}">Valider</a>
+                            <a class="button" href="{{ path('challenge_delete_wrong_img', {'id' : images_user[0].id }) }}">Refuser</a>
+                        </div>
                     {% endif %}
                 </div>
             </div>
         {% endif %}
     {% endif %}
 
-{% endblock %}
 
+    <div id="clockdiv"></div>
+
+
+{% endblock %}
 {% block javascripts %}
-    {{ parent() }}
     <script>
+        var deadline = {{ deadline|date("d/m/Y") }};
+    </script>
+    {{ parent() }}
+
+    <script>
+
+        ///////////////////////////////
+        //      Géolocalisation
+        ///////////////////////////////
+
         var x = document.getElementById("demo");
         function getLocation() {
             if (navigator.geolocation) {
@@ -74,5 +94,36 @@
         }
         getLocation();
         showPosition();
+
+        /////////////////////////////////////////
+        // Distance entre deux prises de photo
+        /////////////////////////////////////////
+        {% if images_user[0] is defined %}
+
+            var lat1 = {{ image_meneur.lat }};
+            var lon1 = {{ image_meneur.lng }};
+            var lat2 = {{ images_user[0].lat }};
+            var lon2 = {{ images_user[0].lng }};
+            function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+                var R = 6371; // Radius of the earth in km
+                var dLat = deg2rad(lat2-lat1);  // deg2rad below
+                var dLon = deg2rad(lon2-lon1);
+                var a =
+                        Math.sin(dLat/2) * Math.sin(dLat/2) +
+                        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                        Math.sin(dLon/2) * Math.sin(dLon/2)
+                    ;
+                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                var d = R * c; // Distance in km
+                return d * 1000; // Distance in m
+            }
+
+            function deg2rad(deg) {
+                return deg * (Math.PI/180)
+            }
+            var difference = Math.round(getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2));
+            $( "#distance_between_too_shoot" ).append( "<p>Distance entre les deux lieux de prises: " + difference + " mètres </p>");
+
+        {% endif %}
     </script>
 {% endblock %}
