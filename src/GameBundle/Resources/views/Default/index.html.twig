@@ -4,12 +4,12 @@
 
     {% if app.user.username is defined %}
         <div class="row text-center">
-            <a class="small button float-center" href="{{ path('challenge_new') }}">Créer un challenge</a>
+            <a class=" button success " href="{{ path('challenge_new') }}">Créer un challenge</a>
         </div>
     {% endif %}
 
     <div class="row">
-        <h1 class="title">Liste des challenges</h1>
+        <h1 class="title">Challenges en cours</h1>
         {% set i = 0 %}
         {% set size_array = challenges|length %}
         {% for challenge in challenges if challenge.etat == true %}
@@ -18,10 +18,10 @@
             {% endif %}
 
 
-            <a href="{{ path('challenge_add_image_user', {'id': challenge.id}) }}">
-                <div class="small-6 columns cards_challenge">
-                    {{ render(controller('GameBundle:Challenge:thumbnail', {'id':challenge.id})) }}
-                    <div>{{ challenge.nom|capitalize }} {{ challenge.type }}</div>
+            <div class="small-6 columns cards_challenge">
+            <a  href="{{ path('challenge_add_image_user', {'id': challenge.id}) }}">
+                    <div class="">{{ render(controller('GameBundle:Challenge:thumbnail', {'id':challenge.id})) }}</div>
+                    <div class="float-center">{{ challenge.nom|capitalize }} {{ challenge.type }}</div>
                     
                 {#<ul class="accordion" data-accordion data-allow-all-closed="true">#}
                     {#<li class="accordion-item" data-accordion-item>#}
@@ -43,8 +43,8 @@
                         {#</div>#}
                     {#</li>#}
                 {#</ul>#}
-                </div>
             </a>
+                </div>
 
 
                     {#<a href="{{ path('challenge_add_image_user', {'id': challenge.id}) }}">#}

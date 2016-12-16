@@ -72,3 +72,8 @@ challenge_delete_wrong_img:
     path:     /{id}/delete-wrong-img
     defaults: { _controller: "GameBundle:Challenge:wrongImage" }
     methods:  [GET]
+
+challenge_classement:
+    path:     /classement
+    defaults: { _controller: "GameBundle:Challenge:classement" }
+    methods:  [GET]

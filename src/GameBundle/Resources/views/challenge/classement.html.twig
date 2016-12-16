@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row align-center small-10 columns ">
+
+<table>
+    <thead>
+        <tr>
+            <th>Rang</th>
+            <th>User</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.score }}</td>
+            </tr>
+        {% else %}
+             <tr><td>Personne dans le classement</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+    </div>
+{% endblock %}

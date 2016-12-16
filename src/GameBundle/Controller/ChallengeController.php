@@ -404,4 +404,15 @@ class ChallengeController extends Controller
 
         return $this->redirectToRoute('challenge_add_image_user', array('id' => $image->getChallenge()->getId()));
     }
+
+    // classement des users
+    public function classementAction ()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('UserBundle:User')->findBy(array(), array('score'=>'DESC'), 10,0 );
+        return $this->render('GameBundle:challenge:classement.html.twig', array(
+            'users' => $users,
+        ));
+
+    }
 }

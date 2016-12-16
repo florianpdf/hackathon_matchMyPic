@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="initial-scale=1, width=device-width">
         <title>{% block title %}Match My Pic{% endblock %}</title>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}" />
 
@@ -28,6 +29,7 @@
                 </div>
                 <div class="top-bar-right">
                     <ul class="menu vertical medium-horizontal" data-dropdown-menu>
+                        <li><a href="{{ path('challenge_classement') }}">Classement </a></li>
                         <li>
                             <a href="#">{{ app.user.prenom|capitalize }} {{ app.user.nom|capitalize }}</a>
                             <ul class="menu vertical">
@@ -69,7 +71,7 @@
             <script src="{{ asset('js/vendor/jquery.js') }}"></script>
             <script src="{{ asset('js/vendor/foundation.js') }}"></script>
             <script src="{{ asset('js/vendor/what-input.js') }}"></script>
-            <script src="{{ asset('js/app.js') }}"></script>
+            {#<script src="{{ asset('js/app.js') }}"></script>#}
 
         {% endblock %}
     </body>
