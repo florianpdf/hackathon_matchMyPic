@@ -62,6 +62,7 @@ class ChallengeController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $user= $this->get('security.token_storage')->getToken()->getUser();
 
+            $challenge->setEtat(false);
             $challenge->setUserCreateur($user);
             $challenge->setUserMeneur($user);
             $challenge->setDateCreate(new \DateTime());
@@ -207,6 +208,48 @@ class ChallengeController extends Controller
         ));
     }
 
+    public function addImageUserAction(Challenge $challenge, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $image = new Image();
+        $form = $this->createForm('GameBundle\Form\ImageType', $image);
+        $form->handleRequest($request);
+
+        $image_meneur = $em->getRepository('GameBundle:Image')->findOneBy(array(
+            'challenge' => $challenge,
+            'type' => self::PHOTO_MENEUR,
+        ));
+
+        $image_user = $em->getRepository('GameBundle:Image')->findOneBy(array(
+            'challenge' => $challenge,
+            'type' => self::PHOTO_USER,
+            'users' => $user,
+        ));
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $image->setDate(new \DateTime());
+            $image->setType(self::PHOTO_USER);
+            $image->setValidee(null);
+            $image->setUsers($user);
+            $image->setChallenge($challenge);
+            $em->persist($image);
+            $em->flush($image);
+
+            return $this->redirectToRoute('challenge_add_image_user', array('id' => $challenge->getId()));
+        }
+
+        return $this->render('GameBundle:challenge:show_challenge.html.twig', array(
+            'challenge' => $challenge,
+            'image' => $image,
+            'form' => $form->createView(),
+            'image_meneur' => $image_meneur,
+            'image_user' => $image_user,
+            'user' => $user,
+        ));
+    }
 
     public function challengeMeneurPasseAction(Challenge $challenge)
     {
@@ -241,7 +284,7 @@ class ChallengeController extends Controller
 
         $em->flush();
 
-        return $this->redirectToRoute('challenge_show', array('id' => $challenge->getId()));
+        return $this->redirectToRoute('challenge_add_image_user', array('id' => $challenge->getId()));
     }
 
     public function challengeEnCoursAction()
@@ -268,4 +311,5 @@ class ChallengeController extends Controller
 
         return $this->redirectToRoute('game_homepage');
     }
+
 }

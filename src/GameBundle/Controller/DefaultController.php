@@ -10,7 +10,7 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $challenges = $em->getRepository('GameBundle:Challenge')->findAll();
+        $challenges = $em->getRepository('GameBundle:Challenge')->findBy(array('type' => 'public'));
 
         $user= $this->get('security.token_storage')->getToken()->getUser();
 

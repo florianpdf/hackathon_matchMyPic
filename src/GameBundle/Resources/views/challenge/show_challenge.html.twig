@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="row">
+        <ul class="accordion" data-accordion data-allow-all-closed="true">
+            <li class="accordion-item" data-accordion-item>
+                <a href="#" class="accordion-title">{{ challenge.nom }}</a>
+                <div class="accordion-content" data-tab-content>
+                    {{ challenge.description }}
+                </div>
+            </li>
+        </ul>
+    </div>
+    {% if image_meneur is not null %}
+        <div class="row">
+            <img src="{{ image_meneur.src }}" alt="">
+        </div>
+        <div class="row">
+            <h1>MAP</h1>
+        </div>
+        {% if image_meneur.users != user %}
+            {% if image_user is null %}
+                <div class="row align-middle">
+                    {{ form_start(form) }}
+                    {{ form_label(form.file, 'Télecharger une image', {'label_attr': {'class':'small button float-center' }}) }}
+                    {{ form_widget(form.file, {'attr': {'class':'show-for-sr' }}) }}
+                    {{ form_widget(form.lng, {'type': 'hidden'}) }}
+                    {{ form_widget(form.lat, {'type': 'hidden'}) }}
+
+                    <input type="submit" class="float-center success button" value="Create" />
+                    {{ form_end(form) }}
+                </div>
+            {% else %}
+                <div class="row">
+                    <img src="{{ asset('uploads/promotion/') }}{{ image_user.src }}" alt="">
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        var x = document.getElementById("demo");
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+        function showPosition(position) {
+            $('#gamebundle_image_lat').val(position.coords.latitude);
+            $('#gamebundle_image_lng').val(position.coords.longitude);
+        }
+        getLocation();
+        showPosition();
+    </script>
+{% endblock %}

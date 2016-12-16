@@ -13,52 +13,52 @@
     </head>
     <body>
 
-
-        <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
-            <button class="menu-icon" type="button" data-toggle></button>
-            <div class="title-bar-title">Match My Pic</div>
-        </div>
-
-        <div class="top-bar" id="example-menu">
-            <div class="top-bar-left hide-for-small-only">
-                <ul class="menu" data-dropdown-menu>
-                    <li class="menu-text">Match My Pic</li>
-                </ul>
+        {% if app.user.username is defined %}
+            <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
+                <button class="menu-icon" type="button" data-toggle></button>
+                <div class="title-bar-title">Match My Pic</div>
             </div>
-            <div class="top-bar-left hide-for-small-only">
-                <ul class="menu" data-dropdown-menu>
-                    <li class="menu-text">Match My Pic</li>
-                </ul>
-            </div>
-            <div class="top-bar-right">
-                <ul class="menu vertical medium-horizontal" data-dropdown-menu>
-                    <li>
 
-                        <a href="#">{{ app.user.prenom|capitalize }} {{ app.user.nom|capitalize }}</a>
-                        <ul class="menu vertical">
-                            <li><a href="#">Score: {{ app.user.score }}</a></li>
-                            <li><a href="#">Nb de challenge en cours: ## nb_challenge ##</a></li>
-                        </ul>
-                    </li>
-                    {% if app.request.attributes.get('_route') != "game_homepage" %}
-                        <li><a href="#">Challenges</a></li>
-                    {% endif %}
-                    <li><a href="{{ path('challenge_en_cours') }}">Challenges en cours</a></li>
-                </ul>
-            </div>
-        </div>
-        {% for type, messages in app.session.flashbag.all() %}
-            {% for message in messages %}
-                <div class="{{ s }} callout" data-closable>
-                    {{ message }}
+            <div class="top-bar" id="example-menu">
+                <div class="top-bar-left hide-for-small-only">
+                    <ul class="menu" data-dropdown-menu>
+                        <li class="menu-text">Match My Pic</li>
+                    </ul>
                 </div>
-                {# Or even with css class rendering:
-                  <div class="flash-{{type}}">{{message}}</div>
-                 #}
+                <div class="top-bar-right">
+                    <ul class="menu vertical medium-horizontal" data-dropdown-menu>
+                        <li>
+                            <a href="#">{{ app.user.prenom|capitalize }} {{ app.user.nom|capitalize }}</a>
+                            <ul class="menu vertical">
+                                <li><a href="#">Score: {{ app.user.score }}</a></li>
+                                <li><a href="#">Nb de challenge en cours: {{ app.user.chalenges|length }}</a></li>
+                            </ul>
+                        </li>
+                        {% if app.request.attributes.get('_route') != "game_homepage" %}
+                            <li><a href="#">Challenges</a></li>
+                        {% endif %}
+                        <li><a href="{{ path('challenge_en_cours') }}">Challenges en cours</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="{{ type }} callout" data-closable>
+                        {{ message }}
+                    </div>
+                    {# Or even with css class rendering:
+                      <div class="flash-{{type}}">{{message}}</div>
+                     #}
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
 
-
+        {% else %}
+            <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
+                <div class="title-bar-title">Match My Pic</div>
+                <a class="top-bar-right" href="{{ path('fos_user_security_login') }}">Se connecter</a>
+            </div>
+        {% endif %}
 
         {% block body %}{% endblock %}
         {% block javascripts %}
