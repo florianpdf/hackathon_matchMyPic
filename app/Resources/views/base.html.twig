@@ -23,7 +23,7 @@
             <div class="top-bar" id="example-menu">
                 <div class="top-bar-left hide-for-small-only">
                     <ul class="menu" data-dropdown-menu>
-                        <li class="menu-text">Match My Pic</li>
+                        <a href="{{ path('game_homepage') }}"><li class="menu-text">Match My Pic</li></a>
                     </ul>
                 </div>
                 <div class="top-bar-right">
@@ -35,17 +35,13 @@
                                 <li><a href="#">Nb de challenge en cours: {{ app.user.chalenges|length }}</a></li>
                             </ul>
                         </li>
-                        {% if app.request.attributes.get('_route') != "game_homepage" %}
-                            <li><a href="#">Challenges</a></li>
-                        {% endif %}
-                        <li><a href="{{ path('challenge_en_cours') }}">Challenges en cours</a></li>
                     </ul>
                 </div>
             </div>
         {% else %}
             <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
-                <div class="title-bar-title">Match My Pic</div>
-                <a class="top-bar-right" href="{{ path('fos_user_security_login') }}">Se connecter</a>
+                <a href="{{ path('game_homepage') }}"><div class="title-bar-title">Match My Pic</div></a>
+                <a class="title-bar-title top-bar-right" href="{{ path('fos_user_security_login') }}">Se connecter</a>
             </div>
         {% endif %}
 

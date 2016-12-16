@@ -2,29 +2,62 @@
 
 {% block body %}
 
-<div class="row">
-    <h1>Liste des challenges</h1>
-    {% set i = 0 %}
-    {% set size_array = user.chalenges|length %}
-    {% for challenge in user.chalenges %}
-        {% if i % 2 == 0 %}
+    <div class="row">
+        <h3 class="title">Liste des challenges en cours</h3>
+        {% set i = 0 %}
+        {% set size_array = user.chalenges|length %}
+        {% for challenge in user.chalenges if challenge.etat == true %}
+            {% if i % 2 == 0 %}
             <div class="row">
-        {% endif %}
-        <div class="small-6 columns cards_challenge">
-            <a href="{{ path('challenge_add_image_user', {'id': challenge.id }) }}"><{{ render(controller('GameBundle:Challenge:thumbnail', {'id':challenge.id})) }}</a>
-            <ul class="accordion" data-accordion data-allow-all-closed="true">
-                <li class="accordion-item" data-accordion-item>
-                    <a href="" class="accordion-title">{{ challenge.nom|capitalize }}</a>
-                    <div class="accordion-content" data-tab-content>
-                        {{ challenge.description }}<br>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        {% if i % 2 != 0 or i == size_array %}
-            </div>
-        {% endif %}
-        {% set i = i+1 %}
-    {% endfor %}
-</div>
+            {% endif %}
+            {% if challenge == null %}
+                <p>Vous n'avez pas de challenge en cours</p>
+            {% else %}
+                <div class="small-6 columns cards_challenge">
+                    <a href="{{ path('challenge_add_image_user', {'id': challenge.id }) }}"><{{ render(controller('GameBundle:Challenge:thumbnail', {'id':challenge.id})) }}</a>
+                    <ul class="accordion" data-accordion data-allow-all-closed="true">
+                        <li class="accordion-item" data-accordion-item>
+                            <a href="" class="accordion-title">{{ challenge.nom|capitalize }}</a>
+                            <div class="accordion-content" data-tab-content>
+                                {{ challenge.description }}<br>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+            {% if i % 2 != 0 or i == size_array %}
+                </div>
+            {% endif %}
+            {% set i = i+1 %}
+        {% endfor %}
+    </div>
+    <div>
+        <h3 class="title">Liste des challenges en attente de votre image</h3>
+        {% set i = 0 %}
+        {% set size_array = user.chalenges|length %}
+        {% for challenge in user.chalenges if challenge.etat == false %}
+            {% if i % 2 == 0 %}
+                <div class="row">
+            {% endif %}
+            {% if challenge == null %}
+                <p>Vous n'avez pas de challenge en cours</p>
+            {% else %}
+                <div class="small-6 columns cards_challenge">
+                    <a href="{{ path('challenge_add_image_meneur', {'id': challenge.id }) }}"><img src="http://www.atom-sa.fr/photos/no-picture.jpg" alt=""></a>
+                    <ul class="accordion" data-accordion data-allow-all-closed="true">
+                        <li class="accordion-item" data-accordion-item>
+                            <a href="" class="accordion-title">{{ challenge.nom|capitalize }}</a>
+                            <div class="accordion-content" data-tab-content>
+                                {{ challenge.description }}<br>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+            {% if i % 2 != 0 or i == size_array %}
+                </div>
+            {% endif %}
+            {% set i = i+1 %}
+        {% endfor %}
+    </div>
 {% endblock %}

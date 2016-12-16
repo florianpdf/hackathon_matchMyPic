@@ -19,6 +19,7 @@ class ChallengeController extends Controller
     const PHOTO_USER = 3;
     const PHOTO_USER_REJETEE = 4;
     const PHOTO_USER_VALIDEE = 5;
+    const DELAI = 2880;
 
     /**
      * Lists all challenge entities.
@@ -198,7 +199,7 @@ class ChallengeController extends Controller
             $em->persist($image);
             $em->flush();
 
-            return $this->redirectToRoute('challenge_show', array('id' => $challenge->getId()));
+            return $this->redirectToRoute('game_homepage', array('id' => $challenge->getId()));
         }
 
         return $this->render('GameBundle:challenge:add_image_meneur.html.twig', array(
@@ -228,12 +229,15 @@ class ChallengeController extends Controller
             'users' => $user,
         ));
 
+
         $images_user = array();
         if ($challenge->getUserMeneur() == $user) {
             $images_user = $em->getRepository('GameBundle:Image')->findBy(array(
                 'challenge' => $challenge,
                 'type' => self::PHOTO_USER,
                 'validee' => NULL
+            ), array(
+                'date' => 'DESC'
             ));
         }
 
@@ -250,6 +254,9 @@ class ChallengeController extends Controller
             return $this->redirectToRoute('challenge_add_image_user', array('id' => $challenge->getId()));
         }
 
+//        Retourne dead line pour compteur js
+        $dead_line = $challenge->getDateCreate()->modify('+' . $challenge->getDuree() . 'hour');
+
         return $this->render('GameBundle:challenge:show_challenge.html.twig', array(
             'challenge' => $challenge,
             'image' => $image,
@@ -258,6 +265,7 @@ class ChallengeController extends Controller
             'image_user' => $image_user,
             'user' => $user,
             'images_user' => $images_user,
+            'deadline' => $dead_line,
         ));
     }
 
@@ -356,6 +364,30 @@ class ChallengeController extends Controller
 //      Image posté
         $image->setType(self::PHOTO_USER_VALIDEE);
         $image->getChallenge()->setUserMeneur($image->getUsers());
+        $image->getChallenge()->setEtat(false);
+
+//      Gestion des points en fonction de la date de poste de l'image'
+        $date_image_meneur = $image_meneur->getDate();
+        $date_image_user = $image->getDate();
+
+        $interval = $date_image_meneur->diff($date_image_user);
+        $int_min = $interval->format('%i');
+        $point = round((self::DELAI - $int_min) / 10);
+        $image->getUsers()->setScore($image->getUsers()->getScore() + $point);
+
+        $em->persist($image);
+        $em->persist($image_meneur);
+
+        $images_challenge = $em->getRepository('GameBundle:Image')->findByChallenge(array(
+            'challenge' => $image->getChallenge(),
+            'type' => self::PHOTO_USER
+        ));
+
+        foreach ($images_challenge as $image_challenge){
+            $em->remove($image_challenge);
+        }
+
+        $em->flush();
 
         return $this->redirectToRoute('game_homepage');
     }
@@ -364,7 +396,12 @@ class ChallengeController extends Controller
      * Suppression des images invalides
      *
      */
-    public function wrongImageAction(){
+    public function wrongImageAction(Image $image)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($image);
+        $em->flush();
 
+        return $this->redirectToRoute('challenge_add_image_user', array('id' => $image->getChallenge()->getId()));
     }
 }
