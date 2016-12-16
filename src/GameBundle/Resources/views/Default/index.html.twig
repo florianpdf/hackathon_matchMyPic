@@ -17,7 +17,13 @@
                 <div class="row">
             {% endif %}
             <div class="small-6 columns cards_challenge">
-                <a href="{{ path('challenge_add_image_user', {'id': challenge.id }) }}">{{ render(controller('GameBundle:Challenge:thumbnail', {'id':challenge.id})) }}</a>
+                {% if app.user in challenge.users %}
+                    <a href="{{ path('challenge_add_image_user', {'id': challenge.id }) }}">
+                        {{ render(controller('GameBundle:Challenge:thumbnail', {'id':challenge.id})) }}
+                    </a>
+                {% else %}
+                    {{ render(controller('GameBundle:Challenge:thumbnail', {'id':challenge.id})) }}
+                {% endif %}
                 <ul class="accordion" data-accordion data-allow-all-closed="true">
                     <li class="accordion-item" data-accordion-item>
                         <a href="#" class="accordion-title">{{ challenge.nom|capitalize }}</a>
@@ -51,9 +57,15 @@
             {% if i % 2 == 0 %}
                 <div class="row">
             {% endif %}
+            {{ dump(challenge) }}
             <div class="small-6 columns cards_challenge">
-                <a href="{{ path('challenge_add_image_user', {'id': challenge.id }) }}"><img src="https://image.freepik.com/icones-gratuites/point-d-39-interrogation_318-52837.jpg" alt="batman"></a>
-                <ul class="accordion" data-accordion data-allow-all-closed="true">
+                {% if app.user == app.user %}
+                    <a href="{{ path('challenge_add_image_user', {'id': challenge.id }) }}"><img src="https://image.freepik.com/icones-gratuites/point-d-39-interrogation_318-52837.jpg" alt="batman"></a>
+                {% else %}
+                    <img src="https://image.freepik.com/icones-gratuites/point-d-39-interrogation_318-52837.jpg" alt="batman">
+                {% endif %}
+
+                    <ul class="accordion" data-accordion data-allow-all-closed="true">
                     <li class="accordion-item" data-accordion-item>
                         <a href="#" class="accordion-title">{{ challenge.nom|capitalize }}</a>
                         <div class="accordion-content" data-tab-content>

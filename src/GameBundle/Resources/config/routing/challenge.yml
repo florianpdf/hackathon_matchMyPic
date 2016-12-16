@@ -63,3 +63,12 @@ challenge_thumbnail:
     defaults: { _controller: "GameBundle:Challenge:thumbnail" }
     methods:  [GET]
 
+challenge_validation_img:
+    path:     /{id}/validation-img
+    defaults: { _controller: "GameBundle:Challenge:validation" }
+    methods:  [GET]
+
+challenge_delete_wrong_img:
+    path:     /{id}/delete-wrong-img
+    defaults: { _controller: "GameBundle:Challenge:wrongImage" }
+    methods:  [GET]

@@ -11,7 +11,7 @@
             <div class="row">
         {% endif %}
         <div class="small-6 columns cards_challenge">
-            <a href="#"><img src="https://upload.wikimedia.org/wikipedia/en/1/17/Batman-BenAffleck.jpg" alt="batman"></a>
+            <a href="{{ path('challenge_add_image_user', {'id': challenge.id }) }}"><{{ render(controller('GameBundle:Challenge:thumbnail', {'id':challenge.id})) }}</a>
             <ul class="accordion" data-accordion data-allow-all-closed="true">
                 <li class="accordion-item" data-accordion-item>
                     <a href="" class="accordion-title">{{ challenge.nom|capitalize }}</a>

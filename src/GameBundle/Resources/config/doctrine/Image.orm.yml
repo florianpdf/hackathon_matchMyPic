@@ -33,10 +33,10 @@ GameBundle\Entity\Image:
     manyToOne:
         challenge:
             targetEntity: GameBundle\Entity\Challenge
-            inversedBy: challenge
-
+            inversedBy: images
         users:
             targetEntity: UserBundle\Entity\User
+
     lifecycleCallbacks:
         prePersist: [ preUpload, setCreatedAtValue, setExpiresAtValue ]
         preUpdate: [ preUpload, setUpdatedAtValue ]

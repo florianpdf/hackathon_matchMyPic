@@ -228,6 +228,15 @@ class ChallengeController extends Controller
             'users' => $user,
         ));
 
+        $images_user = array();
+        if ($challenge->getUserMeneur() == $user) {
+            $images_user = $em->getRepository('GameBundle:Image')->findBy(array(
+                'challenge' => $challenge,
+                'type' => self::PHOTO_USER,
+                'validee' => NULL
+            ));
+        }
+
         if ($form->isSubmitted() && $form->isValid())
         {
             $image->setDate(new \DateTime());
@@ -248,6 +257,7 @@ class ChallengeController extends Controller
             'image_meneur' => $image_meneur,
             'image_user' => $image_user,
             'user' => $user,
+            'images_user' => $images_user,
         ));
     }
 
@@ -312,4 +322,34 @@ class ChallengeController extends Controller
         return $this->redirectToRoute('game_homepage');
     }
 
+
+    /**
+     * Validation des images
+     *
+     */
+    public function validationAction(Image $image)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $image_meneur = $em->getRepository('GameBundle:Image')->findOneBy(array(
+            'challenge' => $image->getChallenge(),
+            'type' => self::PHOTO_MENEUR
+        ));
+
+        $image_meneur->setType(self::PHOTO_MENEUR_TROUVEE);
+
+//      Image posté
+        $image->setType(self::PHOTO_USER_VALIDEE);
+        $image->getChallenge()->setUserMeneur($image->getUsers());
+
+        return $this->redirectToRoute('game_homepage');
+    }
+
+    /**
+     * Suppression des images invalides
+     *
+     */
+    public function wrongImageAction(){
+
+    }
 }

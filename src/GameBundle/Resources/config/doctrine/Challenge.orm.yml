@@ -29,7 +29,7 @@ GameBundle\Entity\Challenge:
     oneToMany:
         images:
             targetEntity: GameBundle\Entity\Image
-            mappedBy: images
+            mappedBy: challenge
 
     manyToOne:
         user_meneur:

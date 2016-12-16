@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+
 {% block body %}
 
     <div class="row">
@@ -14,7 +19,7 @@
     </div>
     {% if image_meneur is not null %}
         <div class="row">
-            <img src="{{ image_meneur.src }}" alt="">
+            <img src="{{ asset('uploads/promotion/') }}{{ image_meneur.src }}" alt="">
         </div>
         <div class="row">
             <h1>MAP</h1>
@@ -37,13 +42,23 @@
                 </div>
             {% endif %}
         {% endif %}
+        {% if images_user is not empty %}
+            <div id='slider' class='swipe'>
+                <div class='swipe-wrap'>
+                    {% if images_user[0] is defined %}
+                        <img src="{{ asset('uploads/promotion/') }}{{ images_user[0].src }}">
+                        <a href="{{ path('challenge_validation_img', {'id' : images_user[0].id }) }}">Valider</a>
+                        <a href="{{ path('challenge_delete_wrong_img', {'id' : images_user[0].id }) }}">Refuser</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
     {% endif %}
 
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-
     <script>
         var x = document.getElementById("demo");
         function getLocation() {
