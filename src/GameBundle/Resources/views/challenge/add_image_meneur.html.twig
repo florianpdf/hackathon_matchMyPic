@@ -20,6 +20,10 @@
                 {{ form_end(form) }}
             </div>
 
+            <div class="text-center">
+                <img id="blah" src="#" alt="your image" />
+            </div>
+
         </div>
     </div>
 
@@ -28,6 +32,29 @@
 {% block javascripts %}
 
     {{ parent() }}
+
+    <script>
+        $('#blah').hide();
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#blah').attr('src', e.target.result);
+                    // Sur NEW masque l'image vide -- Changement de la class
+                    $('.hide').toggleClass('hide responsive-img');
+                    // Sur EDIT masque l'image initiale -- Changement de la class
+                    $('.thumbs').toggleClass('thumbs hide');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#gamebundle_image_file").change(function(){
+            $('#blah').show();
+            readURL(this);
+        });
+
+    </script>
+
     <script>
         var x = document.getElementById("demo");
         function getLocation() {

@@ -30,6 +30,8 @@
 
 {% block javascripts %}
     {{ parent() }}
+
+    <script src="{{ asset('js/timer.js') }}"></script>
     <script>
         $('#gamebundle_challenge_dureeType').change(function () {
             if ($('#gamebundle_challenge_dureeType').prop('checked') == true)
@@ -45,4 +47,12 @@
             }
         });
     </script>
+    <script>
+    var GameTime = new Timer();
+    var Time = 15 * 60; // 15 minutes
+
+    GameTime.start(Time).on('end', function () {
+      alert('Pizza is ready, bon appetit!');
+    });
+</script>
 {% endblock %}

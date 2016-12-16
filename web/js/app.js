@@ -19,6 +19,8 @@ function getTimeRemaining(endtime){
     };
 }
 
+console.log(getTimeRemaining(endtime));
+
 function initializeClock(id, endtime){
     var clock = document.getElementById(id);
     var timeinterval = setInterval(function(){
