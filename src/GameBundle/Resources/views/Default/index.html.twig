@@ -20,6 +20,8 @@
             <a href="{{ path('challenge_add_image_user', {'id': challenge.id}) }}">
                 <div class="small-6 columns cards_challenge">
                     {{ render(controller('GameBundle:Challenge:thumbnail', {'id':challenge.id})) }}
+                    <div>{{ challenge.nom|capitalize }} {{ challenge.type }}</div>
+                    
                 {#<ul class="accordion" data-accordion data-allow-all-closed="true">#}
                     {#<li class="accordion-item" data-accordion-item>#}
                         {#<a href="#" class="accordion-title">{{ challenge.nom|capitalize }}</a>#}
