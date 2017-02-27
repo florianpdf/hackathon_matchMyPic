@@ -82,3 +82,6 @@ fos_user:
     profile:
         form:
             type: UserBundle\Form\ProfileType
+    from_email:
+        address: "match@pics.com"
+        sender_name: "Match Pics"
